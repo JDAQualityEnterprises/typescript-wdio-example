@@ -1,0 +1,52 @@
+import reporting from './framework/helpers/reporting';
+import { JSONReporter, HTMLReportGenerator } from 'wdio-json-html-reporter';
+
+exports.config = {
+    runner: 'local',
+    specs: [
+        'webdriverio-typescript-mocha/specs/*.spec.js'
+    ],
+    baseUrl: "https://www.jdaqualitylimited.com",
+    capabilities: [{
+        browserName: 'chrome',
+        webSocketUrl: true,
+        'goog:chromeOptions': {
+          // to run chrome headless the following flags are required
+          // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
+            args: ['--headless', '--disable-gpu', '--disable-dev-shm-usage','--no-sandbox', '--start-maximized'],
+          }
+    }],
+    logLevels: {
+      webdriver: 'warn'
+    },
+    framework: 'mocha',
+    mochaOpts: {
+        bail: false,
+        timeout: 60000
+    },
+    reporters: [
+      [JSONReporter, { outputFile: './reports/test-results.json', screenshotOption: 'OnFailure' }],  // Options: "No", "OnFailure", "Full"
+    ],
+    autoCompileOpts: {
+        autoCompile: true,
+        tsNodeOpts: {
+            transpileOnly: true,
+            project: 'tsconfig.json'
+        }
+    },
+    
+    onPrepare: function(config, capabilities){
+      reporting.setupReporter(this);
+    },
+
+    onComplete: async function (exitCode, config, capabilities, results) {
+      const outputFilePath = './reports/test-report.html';
+      const jsonFolder = './reports'; 
+
+      const reportGenerator = new HTMLReportGenerator(outputFilePath);
+      await reportGenerator.convertJSONFolderToHTML(jsonFolder);
+
+
+      //reporting.generateReport(config);
+    }
+}

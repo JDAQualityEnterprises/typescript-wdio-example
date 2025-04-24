@@ -1,0 +1,18 @@
+{
+    "root": true,
+    "plugins": [
+      "wdio",
+      "@typescript-eslint",
+       "cucumber"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:wdio/recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": 0,
+      "@typescript-eslint/no-empty-object-type": 0
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2022",
+    "moduleResolution": "node",
+    "removeComments": false,
+    "noImplicitAny": false,
+    "inlineSourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,      
+    "allowJs": true,
+    "outDir": "dist",
+
+    "paths": {
+        "@framework": ["./framework/index.ts"]
+    },
+    "types": [
+        "node",
+        "@wdio/globals/types",
+        "@wdio/mocha-framework",
+        "@wdio/cucumber-framework"
+    ]
+},
+"exclude": [
+    "node_modules",
+    "dist"
+]
+}

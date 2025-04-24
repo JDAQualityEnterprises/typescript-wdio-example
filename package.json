@@ -1,0 +1,60 @@
+{
+  "name": "@jda/framework",
+  "version": "1.0.0",
+  "description": "ui reference framework",
+  "scripts": {
+    "build": "tsc",
+    "test-wdio-mocha": "npx tsc && npx wdio run dist/webdriverio-ts-mocha-config.js",
+    "test-wdio-typescript-ci": "npx tsc && npx wdio run dist/webdriverio-ts-ci-config.js",
+    "test-wdio-cucumber": "npx tsc && npx wdio run dist/webdriverio-ts-cucumber-config.js",
+    "lint": "eslint . --ext .ts,.feature",
+    "lint-report": "eslint . --ext .js,.ts,.feature -f json -o eslint-report.json",
+    "generate-report": "npx marge reports/merged-results.json --reportDir reports -f report.html --charts true -t 'Automation-results' -p 'Execution-Report'",
+    "clean-reports": "node -e require('fs-extra').emptyDir('./reports');"
+  },
+  "keywords": [
+    "WebDriver.io",
+    "wdio"
+  ],
+  "author": "John Alexander",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/JDAQualityEnterprises/typescript-wdio-example"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.19",
+    "@types/mocha": "10.0.10",
+    "@types/node": "22.14.1",
+    "@typescript-eslint/eslint-plugin": "8.30.1",
+    "@typescript-eslint/parser": "8.30.1",
+    "@wdio/cli": "^9.12.6",
+    "@wdio/cucumber-framework": "^9.12.6",
+    "@wdio/local-runner": "^9.12.6",
+    "@wdio/mocha-framework": "^9.12.6",
+    "@wdio/reporter": "^9.12.6",
+    "@wdio/spec-reporter": "^9.12.6",
+    "@wdio/types": "^9.12.6",
+    "chai": "4.2.0",
+    "chromedriver": "latest",
+    "cucumber-html-reporter": "7.2.0",
+    "eslint": "^8.56.0",
+    "eslint-html-reporter": "^0.7.4",
+    "eslint-plugin-cucumber": "^2.0.0",
+    "eslint-plugin-wdio": "^9.9.1",
+    "log4js": "^6.9.1",
+    "mocha": "11.1.0",
+    "moment": "^2.30.1",
+    "sinon": "^20.0.0",
+    "soft-assert": "0.2.7",
+    "strip-ansi": "5.2.0",
+    "ts-node": "10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "wdio-cucumberjs-json-reporter": "^6.0.1",
+    "wdio-mochawesome-reporter": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=22.14"
+  }
+}

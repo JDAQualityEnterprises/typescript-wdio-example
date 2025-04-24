@@ -1,0 +1,74 @@
+import reporting from './framework/helpers/reporting';
+import { ReportAggregator } from 'wdio-html-nice-reporter';
+let reportAggregator : ReportAggregator;
+
+exports.config = {
+    runner: 'local',
+    specs: [
+        'webdriverio-typescript-mocha/specs/*.spec.js'
+    ],
+    baseUrl: "https://www.jdaqualitylimited.com",
+    capabilities: [{
+        browserName: 'chrome',
+        webSocketUrl: true,
+        'goog:chromeOptions': {
+          // to run chrome headless the following flags are required
+          // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
+            args: ['--headless', '--disable-gpu', '--disable-dev-shm-usage','--no-sandbox', '--start-maximized'],
+          }
+    }],
+    logLevels: {
+      webdriver: 'warn'
+    },
+    framework: 'mocha',
+    mochaOpts: {
+        bail: false,
+        timeout: 60000
+    },
+    reporters: [["html-nice", {
+            outputDir: './reports/html-reports/',
+            filename: 'report.html',
+            reportTitle: 'Test Report Title',
+            screenshotUseRelativePath: false,
+            linkScreenshots: true,
+            showInBrowser: true,
+            collapseTests: false,
+            // to turn on screenshots after every test
+            useOnAfterCommandForScreenshot: true,
+
+            // to initialize the logger
+            LOG: reporting.setupReporter(this)
+        }]],
+    autoCompileOpts: {
+        autoCompile: true,
+        tsNodeOpts: {
+            transpileOnly: true,
+            project: 'tsconfig.json'
+        }
+    },
+    
+    onPrepare: function(config, capabilities){
+      reporting.setupReporter(this);
+
+      reportAggregator = new ReportAggregator({
+        outputDir: './reports/html-reports/',
+        filename: 'master-report.html',
+        reportTitle: 'Master Report',
+        browserName: capabilities.browserName,
+        collapseTests: false,
+        useOnAfterCommandForScreenshot: true,
+        showInBrowser: true,
+      });
+
+      reportAggregator.clean();
+    },
+
+    onComplete: function (exitCode, config, capabilities, results) {
+
+      (async () => {
+        await reportAggregator.createReport();
+    })();
+
+      //reporting.generateReport(config);
+    }
+}
